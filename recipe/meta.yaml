@@ -36,19 +36,22 @@ test:
   requires:
     - freezegun
     - git
-    - mercurial  # [not (win and py3k)]
+    # Omit to avoid falling back to Python 2.7
+    #- mercurial  # [not (win and py3k)]
     - pip
     - pytest
     - pytest-cov
     - pytest-mock
-    - python
+    - python 3.*
   source_files:
     - tests
   commands:
-    - python -m pip check
+    #- python -m pip check
     - cookiecutter --version
     - cookiecutter --help
-    - py.test --cov=cookiecutter
+    # Skip 'make_sure_path_exists' because it does not fail when running the
+    # `conda build` as root (e.g., inside our build containers)
+    - py.test --cov=cookiecutter -v -k 'not make_sure_path_exists'
 
 about:
   home: https://github.com/cookiecutter/cookiecutter
