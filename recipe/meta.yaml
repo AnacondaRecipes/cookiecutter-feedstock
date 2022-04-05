@@ -1,4 +1,4 @@
-{% set version = "1.7.2" %}
+{% set version = "1.7.3" %}
 
 package:
   name: cookiecutter
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/c/cookiecutter/cookiecutter-{{ version }}.tar.gz
-  sha256: efb6b2d4780feda8908a873e38f0e61778c23f6a2ea58215723bcceb5b515dac
+  sha256: 6b9a4d72882e243be077a7397d0f1f76fe66cf3df91f3115dbb5330e214fa457
 
 build:
   noarch: python
@@ -19,18 +19,18 @@ requirements:
   host:
     - pip
     - python
+    - setuptools
+    - wheel
   run:
+    - python
     - binaryornot >=0.4.4
     - click >=7.0
-    - jinja2 <3.0.0a0
+    - jinja2 >=2.7,<4.0.0
     - jinja2-time >=0.2.0
-    - markupsafe <2.0.0
     - poyo >=0.5.0
-    - python
     - python-slugify >=4.0.0
     - requests >=2.23.0
     - six >=1.10
-    - whichcraft >=0.4.0
 
 test:
   requires:
@@ -46,7 +46,7 @@ test:
   source_files:
     - tests
   commands:
-    #- python -m pip check
+    - python -m pip check
     - cookiecutter --version
     - cookiecutter --help
     # Skip 'make_sure_path_exists' because it does not fail when running the
@@ -58,6 +58,7 @@ about:
   license_family: BSD
   license_file: LICENSE
   license: BSD-3-Clause
+  dev_url: https://github.com/cookiecutter/cookiecutter
   doc_url: https://cookiecutter.readthedocs.io
   doc_source_url: https://github.com/cookiecutter/cookiecutter/tree/master/docs
   summary: >
