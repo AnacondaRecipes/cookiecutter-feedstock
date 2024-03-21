@@ -1,5 +1,5 @@
 {% set name = "cookiecutter" %}
-{% set version = "2.5.0" %}
+{% set version = "2.6.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,13 +7,14 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: e61e9034748e3f41b8bd2c11f00d030784b48711c4d5c42363c50989a65331ec
+  sha256: db21f8169ea4f4fdc2408d48ca44859349de2647fbe494a9d6c3edfc0542c21c
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vvv
   entry_points:
-    - cookiecutter = cookiecutter.cli:main
+    - cookiecutter = cookiecutter.__main__:main
+  skip: True  # [py<37]
 
 requirements:
   host:
@@ -55,7 +56,7 @@ test:
     - cookiecutter --version | grep -iE "Cookiecutter {{ version.replace(".", "\\.") }}"
     - pip list | grep -iE "cookiecutter\s+{{ version.replace(".", "\\.") }}"
     - cookiecutter --help
-    - pytest tests -vv
+    - pytest tests -vvv
 
 about:
   home: https://github.com/cookiecutter/cookiecutter
@@ -73,7 +74,7 @@ about:
     Additionally the template can provide code (Python or shell-script) to be executed before and after generation (pre-gen- and post-gen-hooks).
 extra:
   recipe-maintainers:
-    - bollwyvl
-    - cadair
-    - jakirkham
+    - audreyfeldroy
     - pydanny
+    - jensens
+    - ericof
