@@ -10,7 +10,7 @@ source:
   sha256: db21f8169ea4f4fdc2408d48ca44859349de2647fbe494a9d6c3edfc0542c21c
 
 build:
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vvv
   entry_points:
     - cookiecutter = cookiecutter.__main__:main
