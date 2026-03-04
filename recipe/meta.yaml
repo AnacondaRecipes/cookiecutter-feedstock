@@ -1,5 +1,5 @@
 {% set name = "cookiecutter" %}
-{% set version = "2.6.0" %}
+{% set version = "2.7.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,14 +7,14 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: db21f8169ea4f4fdc2408d48ca44859349de2647fbe494a9d6c3edfc0542c21c
+  sha256: ca7bb7bc8c6ff441fbf53921b5537668000e38d56e28d763a1b73975c66c6138
 
 build:
-  number: 1
+  number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vvv
   entry_points:
     - cookiecutter = cookiecutter.__main__:main
-  skip: True  # [py<37]
+  skip: True  # [py<310]
 
 requirements:
   host:
@@ -48,9 +48,11 @@ test:
     - pip
     - pytest
     - pytest-mock
+    - pytest-cov
     - python
   source_files:
     - tests
+    - pyproject.toml
   commands:
     - pip check
     - cookiecutter --version | grep -iE "Cookiecutter {{ version.replace(".", "\\.") }}"
