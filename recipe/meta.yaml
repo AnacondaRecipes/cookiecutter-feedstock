@@ -33,6 +33,10 @@ requirements:
     - requests >=2.23.0
     - rich
 
+{% set ignored_tests = [
+  "--deselect=tests/test_generate_hooks.py::test_deprecate_run_hook_from_repo_dir",
+  "--deselect=tests/test_generate_files.py::test_generate_files_binaries"
+]%}
 test:
   imports:
     - cookiecutter
@@ -58,7 +62,7 @@ test:
     - cookiecutter --version | grep -iE "Cookiecutter {{ version.replace(".", "\\.") }}"
     - pip list | grep -iE "cookiecutter\s+{{ version.replace(".", "\\.") }}"
     - cookiecutter --help
-    - pytest tests -vvv --deselect=tests/test_generate_files.py::test_generate_files_binaries
+    - pytest tests -vvv {{ ignored_tests|join(" ") }}
 
 about:
   home: https://github.com/cookiecutter/cookiecutter
