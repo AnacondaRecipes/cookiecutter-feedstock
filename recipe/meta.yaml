@@ -34,7 +34,10 @@ requirements:
     - rich
 
 {% set ignored_tests = [
+  # Hanging on this test only on CI, locally passed.
   "--deselect=tests/test_generate_hooks.py::test_deprecate_run_hook_from_repo_dir",
+  #   >       assert is_binary(str(Path(dst_dir, '.DS_Store')))
+  # E       AssertionError: assert False
   "--deselect=tests/test_generate_files.py::test_generate_files_binaries"
 ]%}
 test:
