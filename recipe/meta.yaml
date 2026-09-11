@@ -10,7 +10,7 @@ source:
   sha256: ca7bb7bc8c6ff441fbf53921b5537668000e38d56e28d763a1b73975c66c6138
 
 build:
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vvv
   entry_points:
     - cookiecutter = cookiecutter.__main__:main
@@ -49,7 +49,6 @@ test:
   requires:
     - freezegun
     - git
-    - m2-grep  # [win]
     # omit mercurial, because it's not available and optional
     # - mercurial  # [not (win and py3k)]
     - pip
@@ -62,8 +61,10 @@ test:
     - pyproject.toml
   commands:
     - pip check
-    - cookiecutter --version | grep -iE "Cookiecutter {{ version.replace(".", "\\.") }}"
-    - pip list | grep -iE "cookiecutter\s+{{ version.replace(".", "\\.") }}"
+    - cookiecutter --version | grep -iE "Cookiecutter {{ version.replace(".", "\\.") }}"      # [not win]
+    - cookiecutter --version | findstr /i /r "Cookiecutter.*{{ version }}"                      # [win]
+    - pip list | grep -iE "cookiecutter\s+{{ version.replace(".", "\\.") }}"                   # [not win]
+    - pip list | findstr /i /r "cookiecutter.*{{ version }}"                                   # [win]
     - cookiecutter --help
     - pytest tests -vvv {{ ignored_tests|join(" ") }}
 
